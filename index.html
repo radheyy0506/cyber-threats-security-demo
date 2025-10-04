@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Threats Security - A Student Initiative</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Customizing Tailwind for a professional, light academic theme
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#003366', // Deep Academic Blue (FAMT style)
+                        'secondary': '#F7F9FC', // Light background gray
+                        'accent': '#FF5733', // Action Orange-Red
+                        'success': '#10B981', // Green for success feedback
+                        'nav-active': '#00AABB', // Bright highlight for active menu
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* BASE STYLES for Light Academic Theme */
+        body, html {
+            background-color: #FFFFFF; /* White Background */
+            color: #333333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* CRITICAL FIX: Increased padding-top to ensure headings are visible */
+        .page { 
+            display: block; 
+            min-height: 100vh; 
+            width: 100%;
+            /* Maximum safe padding to clear the fixed header (Header height is approx 96px) */
+            padding-top: 130px; 
+        }
+        .page.hidden { 
+            display: none; 
+        }
+        .page.active {
+            display: block; 
+        }
+
+        /* Page Content Boxes */
+        .page-content-box {
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border: 1px solid #E5E7EB;
+        }
+        /* DEMO CONTENT BOX */
+        .demo-content { 
+            border: 1px solid #D1D5DB; 
+            border-radius: 0.75rem; 
+            padding: 2rem; 
+            background-color: #F9FAFB; /* Off-white demo background */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+        }
+        /* ACADEMIC HEADER BAR (Mimics institution style) */
+        .academic-header {
+            background-color: #FFFFFF;
+            border-bottom: 3px solid #E0E6ED;
+        }
+        .nav-button.active-nav {
+            background-color: var(--tw-colors-primary);
+            color: white !important;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        /* Input Field Styling */
+        input[type="password"], input[type="text"] {
+            background-color: #FFFFFF !important;
+            border-color: #D1D5DB !important;
+            color: #333333 !important;
+        }
+        /* Demo Specific Overrides for Boxes/Inputs */
+        .bg-gray-50 { background-color: #F7F9FC !important; }
+        .text-red-600 { color: #DC2626 !important; }
+        .text-green-600 { color: #10B981 !important; }
+        /* Custom Switch Styling (for DEMO PAGE TEMPLATE) */
+        input:checked ~ .toggle-bg {
+            background-color: var(--tw-colors-success);
+        }
+        input:checked ~ .toggle-bg .dot {
+            transform: translateX(28px); /* Move dot to the right */
+            background-color: white;
+        }
+        /* CSS for Responsive Video Embed */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+<header class="fixed top-0 left-0 w-full academic-header z-10 transition duration-300">
+    <div class="bg-primary text-white text-center py-2 text-sm font-semibold">
+        FINOLEX ACADEMY OF MANAGEMENT AND TECHNOLOGY (FAMT)
+    </div>
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+        <div class="flex items-center">
+            
+            
+            <div>
+                <div class="text-xl font-extrabold text-primary">Cyber Threats Security</div>
+            </div>
+        </div>
+        
+        <div class="space-x-2 flex items-center">
+            <button onclick="changePage('page-home', true)" id="nav-home" class="nav-button text-gray-600 hover:text-primary font-medium transition active-nav">Home</button>
+            <button onclick="changePage('page-about', true)" id="nav-about" class="nav-button text-gray-600 hover:text-primary font-medium transition hidden sm:inline-block">About</button>
+            <button onclick="changePage('page-menu', true)" id="nav-menu" class="nav-button px-3 py-1 bg-primary text-white rounded-lg hover:bg-nav-active transition font-medium">Demos</button>
+            <button onclick="changePage('page-glossary', true)" id="nav-glossary" class="nav-button text-gray-600 hover:text-primary font-medium transition hidden sm:inline-block">Glossary</button>
+            <button onclick="changePage('page-contact', true)" id="nav-contact" class="nav-button text-gray-600 hover:text-primary font-medium transition hidden md:inline-block">Contact</button>
+        </div>
+    </nav>
+</header>
+
+<div id="page-home" class="page active flex flex-col justify-center items-center p-0 bg-secondary">
+    <div class="w-full bg-primary text-white text-center py-16 shadow-lg mt-[-130px]"> 
+        <div class="max-w-4xl mx-auto px-4">
+            
+            <h1 class="text-5xl sm:text-6xl font-extrabold mb-4 tracking-tight leading-tight">
+                FAMT Cyber Threats Security website
+            </h1>
+            
+            <p class="text-lg sm:text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+                A technical initiative by Second Year CSE (Cybersecurity) students to promote digital safety education through interactive demonstrations.
+            </p>
+            
+            <button onclick="changePage('page-menu', true)" class="px-8 py-3 bg-accent text-white text-lg font-bold rounded-lg shadow-md hover:bg-red-600 transition duration-300 transform hover:scale-105">
+                Start Learning Today <i class="fas fa-play ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="max-w-6xl w-full mx-auto p-10 mt-8">
+        <h2 class="text-3xl font-extrabold text-primary mb-6">Our Mission</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="p-6 page-content-box rounded-lg border-t-4 border-primary hover:shadow-xl transition">
+                <i class="fas fa-graduation-cap text-3xl text-primary mb-3"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Academic Excellence</h3>
+                <p class="text-gray-600 text-sm">Project developed under the guidance of the CSE Department faculty.</p>
+            </div>
+            <div class="p-6 page-content-box rounded-lg border-t-4 border-success hover:shadow-xl transition">
+                <i class="fas fa-lightbulb text-3xl text-success mb-3"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Digital Awareness</h3>
+                <p class="text-gray-600 text-sm">Empowering the FAMT community with practical cybersecurity knowledge.</p>
+            </div>
+            <div class="p-6 page-content-box rounded-lg border-t-4 border-accent hover:shadow-xl transition">
+                <i class="fas fa-phone-alt text-3xl text-accent mb-3"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Student Contact</h3>
+                <p class="text-gray-600 text-sm">
+                    Radhika: <span class="font-semibold">8446166788</span><br>
+                    Mashrufi: <span class="font-semibold">7885893466</span>
+                </p>
+            </div>
+             <div class="p-6 page-content-box rounded-lg border-t-4 border-gray-400 hover:shadow-xl transition">
+                <i class="fas fa-handshake text-3xl text-gray-500 mb-3"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Disclaimer</h3>
+                <p class="text-gray-600 text-sm">This is an educational project. Demos are simulations only.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="page-about" class="page hidden p-10 bg-secondary">
+    <div class="max-w-4xl mx-auto page-content-box p-8 rounded-lg shadow-xl">
+        <br><br><br><br>
+        <h2 class="text-5xl font-extrabold text-primary mb-6 border-b pb-2">About the our website </h2>
+        <p class="text-lg text-gray-700 mb-6">This project was initiated by Radhika Ravindra Janawekar and Mashrufi Ansar Nalekar, Second Year Computer Science Engineering students specializing in Cybersecurity at FAMT. Our goal is to bridge the gap between theoretical knowledge and real-world digital dangers.</p>
+        
+        <h3 class="text-3xl font-bold text-primary mt-8 mb-4">Core Principles</h3>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-5 bg-blue-50 border-l-4 border-primary rounded-lg">
+                <h4 class="text-xl font-bold text-primary">Practical Learning</h4>
+                <p class="text-gray-600">We use risk-free, interactive simulations to demonstrate threats like weak passwords, brute force attacks, and poor authentication practices.</p>
+            </div>
+            <div class="p-5 bg-green-50 border-l-4 border-success rounded-lg">
+                <h4 class="text-xl font-bold text-success">Commitment to Safety</h4>
+                <p class="text-gray-600">All demos are completely simulated. No real exploits are executed, ensuring a safe and ethical learning environment for all users.</p>
+            </div>
+        </div>
+
+        <button onclick="changePage('page-menu', true)" class="mt-8 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-nav-active transition">
+            Start Demos →
+        </button>
+    </div>
+</div>
+
+<div id="page-contact" class="page hidden p-10 bg-secondary">
+    <div class="max-w-4xl mx-auto page-content-box p-8 rounded-lg shadow-xl"><br><br><br><br>
+        <h2 class="text-5xl font-extrabold text-primary mb-6 border-b pb-2">Connect with the Team</h2>
+        <p class="text-lg text-gray-700 mb-8">For inquiries, feedback, or collaborations, please reach out directly to the student team members.</p>
+        
+        <div class="space-y-6">
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                <i class="fas fa-user-circle w-8 h-8 text-primary mr-4 text-2xl"></i>
+                <div>
+                    <p class="text-gray-500 text-sm">Radhika Janawekar </p>
+                    <a href="mailto:radheyy0506@gmail.com" class="text-lg font-semibold text-primary hover:underline">radheyy0506@gmail.com</a>
+                    <p class="text-sm text-gray-700">Phone: 8446166788</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                <i class="fas fa-user-circle w-8 h-8 text-primary mr-4 text-2xl"></i>
+                <div>
+                    <p class="text-gray-500 text-sm">Mashrufi Nalekar </p>
+                    <a href="mailto:mashrufi40@gmail.com" class="text-lg font-semibold text-primary hover:underline">mashrufi40@gmail.com</a>
+                    <p class="text-sm text-gray-700">Phone: 7885893466</p>
+                </div>
+            </div>
+
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                <i class="fas fa-building w-8 h-8 text-primary mr-4 text-2xl"></i>
+                <div>
+                    <p class="text-gray-500 text-sm">FAMT - CSE (Cybersecurity)Department</p>
+                    <p class="text-lg font-semibold text-gray-800">Finolex Academy of Management and Technology</p>
+                </div>
+            </div>
+
+        </div>
+        
+        <button onclick="changePage('page-home', true)" class="mt-8 px-6 py-3 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition">
+            ← Back to Home
+        </button>
+    </div>
+</div>
+
+<div id="page-glossary" class="page hidden p-10 bg-secondary">
+    <div class="max-w-4xl mx-auto page-content-box p-8 rounded-lg shadow-xl"><br><br><br><br>
+        <h2 class="text-5xl font-extrabold text-primary mb-6 border-b pb-2">Key terms </h2>
+        <p class="text-lg text-gray-700 mb-8">Understanding the foundational terminology is key to digital security.</p>
+        
+        <dl class="space-y-6">
+            <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-primary">
+                <dt class="text-xl font-bold text-gray-800">Phishing</dt>
+                <dd class="text-gray-600">The fraudulent attempt to obtain sensitive information, often for malicious reasons, by disguising oneself as a trustworthy entity in an electronic communication.</dd>
+            </div>
+             <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-primary">
+                <dt class="text-xl font-bold text-gray-800">Brute Force Attack</dt>
+                <dd class="text-gray-600">A trial-and-error method used by software to guess a password by systematically trying every possible combination until the correct one is found.</dd>
+            </div>
+             <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-primary">
+                <dt class="text-xl font-bold text-gray-800">2FA (Two-Factor Authentication)</dt>
+                <dd class="text-gray-600">A security process where a user provides two different authentication factors (e.g., password and a code from a phone) to verify their identity.</dd>
+            </div>
+        </dl>
+        
+        <button onclick="changePage('page-menu', true)" class="mt-8 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-nav-active transition">
+            See Demos in Action →
+        </button>
+    </div>
+</div>
+
+<div id="page-menu" class="page hidden p-10 bg-secondary">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
+            <h2 class="text-5xl font-extrabold text-primary mb-4 sm:mb-0">Interactive Demo Catalog</h2>
+            <button onclick="changePage('page-home', true)" class="px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition duration-300">
+                ← Back to Home
+            </button>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="demo-menu-list">
+            </div>
+    </div>
+</div>
+
+<template id="demo-page-template">
+    <div class="page hidden p-10 bg-secondary">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-primary mb-6" data-title></h2>
+
+            <div class="bg-white border border-gray-300 rounded-lg shadow-md mb-6">
+                <div class="p-4 bg-gray-100 rounded-t-lg border-b border-gray-300">
+                    <div class="text-lg font-semibold text-gray-700 text-center">Demo Visual Aid</div>
+                </div>
+                <div class="video-container rounded-b-lg overflow-hidden" data-video-embed>
+                    </div>
+            </div>
+
+            <div class="flex justify-between items-center mb-8 p-4 page-content-box rounded-lg shadow-lg border-l-4 border-primary">
+                <button onclick="changePage(getCurrentPageIndex() - 1, true)" class="flex items-center px-4 py-2 text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition" data-prev-btn>
+                    <i class="fas fa-chevron-left mr-1"></i> Previous
+                </button>
+                <button onclick="changePage('page-menu', true)" class="px-6 py-2 bg-accent text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition">
+                    <i class="fas fa-th-list"></i> Menu
+                </button>
+                <button onclick="changePage(getCurrentPageIndex() + 1, true)" class="flex items-center px-4 py-2 text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition" data-next-btn>
+                    Next <i class="fas fa-chevron-right ml-1"></i>
+                </button>
+            </div>
+
+            <div class="page-content-box p-6 rounded-lg shadow-xl mb-8">
+                <label class="block text-2xl font-bold text-gray-800 mb-4"><i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i> Demo Description & Activation</label>
+                <p class="text-gray-600 mb-6" data-description></p>
+                <div class="flex items-center justify-between border-t pt-4">
+                    <span class="text-xl font-medium text-gray-800">Activate Demo:</span>
+                    <label class="flex items-center cursor-pointer">
+                        <div class="relative">
+                            <input type="checkbox" data-switch class="sr-only">
+                            <div class="block bg-gray-300 w-16 h-9 rounded-full toggle-bg transition-all duration-300"></div>
+                            <div class="dot absolute left-1 top-1 bg-white w-7 h-7 rounded-full transition-all duration-300 shadow-md"></div>
+                        </div>
+                        <div class="ml-4 text-gray-700 font-bold text-xl">
+                            <span data-switch-text>OFF</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="demo-content" data-content>
+                </div>
+        </div>
+    </div>
+</template>
+
+<footer class="w-full bg-primary text-white p-6 mt-12 transition duration-300">
+    <div class="max-w-7xl mx-auto text-center">
+        <p class="text-sm font-semibold mb-2">FAMT Student Initiative</p>
+        <p class="text-xs text-gray-300">
+            **Disclaimer:** This project is for **educational purposes only**. All demos are simulations and do not execute real exploits.
+        </p>
+        <p class="text-sm mt-2 text-gray-400">&copy; 2025 Finolex Academy of Management and Technology. All rights reserved.</p>
+    </div>
+</footer>
+
+
+<script>
+    // --- Data Model for all Demos (Demo 5 and 8 Removed, IDs renumbered) ---
+    const demos = [
+        // ID 1: Password Strength
+        { id: 1, title: "Password Strength Checker", description: "This demo visually assesses the complexity of a password in real-time based on length (minimum 8 characters), mixed case, numbers, and symbols.", videoId: "bFwJbV-7tH0" }, // YouTube: How secure is your password?
+        // ID 2: Wrong Password Counter
+        { id: 2, title: "Wrong Password Counter", description: "A simple login attempt counter. It shows how systems lock or warn users after multiple failed password attempts, a basic defense against brute force.", videoId: "u_t2Jk5kS9E" }, // YouTube: Brute Force Attack explained (simpler)
+        // ID 3: Show/Hide Password
+        { id: 3, title: "Show/Hide Password", description: "Demonstrates the utility of a simple 'show/hide' toggle for usability, especially on mobile, but highlights the risk of shoulder surfing.", videoId: "9V_rGgQ_16Q" }, // YouTube: Shoulder Surfing Prevention
+        // ID 4: Password Expiry Reminder
+        { id: 4, title: "Password Expiry Reminder", description: "A timer-based demo showing how systems remind users to change passwords to reduce the window of vulnerability for compromised credentials.", videoId: "k5kY7r7k4C4" }, // YouTube: Password Expiry Security
+        // ID 5: Brute Force Visualizer (Original Demo 6)
+        { id: 5, title: "Brute Force Visualizer", description: "Takes a password and calculates/estimates the time or number of attempts a modern computer would need to crack it, demonstrating the power of password length and complexity.", videoId: "z12n9p2I-L4" }, // YouTube: Time it takes to crack passwords
+        // ID 6: Typing Speed Password Test (Original Demo 7)
+        { id: 6, title: "Typing Speed Password Test", description: "Measures the time taken to type a password, illustrating the human element in security. A slower time *might* suggest an unfamiliar or looked-up password.", videoId: "s3t-D-D1g_c" }, // YouTube: Biometric Typing Speed
+    ];
+    
+    // --- Global Variables ---
+    let activePageId = 'page-home';
+    let expiryTimer = null;
+    let wrongPassCounter = 0;
+    let typingTimer = null;
+
+    // --- UNIVERSAL SHOW/HIDE PASSWORD TOGGLE ---
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = '🔒';
+        } else {
+            input.type = 'password';
+            icon.textContent = '👁️';
+        }
+    }
+
+    // --- 1. CORE PAGE NAVIGATION LOGIC (CRITICAL FIX APPLIED) ---
+    function changePage(target, updateNav = false) {
+        // Clear previous state
+        if (expiryTimer) clearTimeout(expiryTimer);
+        
+        let targetId = typeof target === 'number' ? `page-demo-${target}` : target;
+        
+        if (targetId.startsWith('page-demo-')) {
+            let index = parseInt(targetId.replace('page-demo-', ''));
+            if (index < 1 || index > demos.length) return; 
+        }
+
+        // --- CORE FIX: Hide all pages first, then show the target page ---
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+            page.classList.add('hidden'); // Use hidden class to hide
+        });
+
+        const newPage = document.getElementById(targetId);
+        if (newPage) {
+            newPage.classList.remove('hidden'); // Show the new page
+            newPage.classList.add('active');
+            activePageId = targetId;
+            if (targetId.startsWith('page-demo-')) {
+                const demoId = parseInt(targetId.split('-').pop());
+                initializeDemo(demoId);
+            }
+        } else {
+            console.error(`Page not found: ${targetId}`);
+        }
+        window.scrollTo(0, 0);
+
+        // Navigation Highlight Logic
+        if (updateNav) {
+            document.querySelectorAll('.nav-button').forEach(btn => {
+                btn.classList.remove('active-nav', 'bg-primary', 'text-white');
+                btn.classList.add('text-gray-600', 'hover:text-primary');
+            });
+
+            let navId = targetId.startsWith('page-demo-') ? 'nav-menu' : `nav-${targetId.split('-').pop()}`;
+            const activeNavButton = document.getElementById(navId);
+            
+            if (activeNavButton) {
+                 activeNavButton.classList.remove('text-gray-600', 'hover:text-primary');
+                 activeNavButton.classList.add('active-nav');
+            }
+            // Special case for Demos button to keep background color
+            if (navId === 'nav-menu') {
+                activeNavButton.classList.remove('active-nav'); 
+                activeNavButton.classList.add('bg-primary', 'text-white', 'hover:bg-nav-active');
+            }
+        }
+    }
+
+    function getCurrentPageIndex() {
+        if (activePageId.startsWith('page-demo-')) {
+            return parseInt(activePageId.replace('page-demo-', ''));
+        }
+        return -1;
+    }
+
+    // --- 2. DEMO PAGE INITIALIZATION & STRUCTURE ---
+    function createDemoPages() {
+        const template = document.getElementById('demo-page-template');
+        demos.forEach(demo => {
+            const clone = template.content.cloneNode(true);
+            const pageDiv = clone.querySelector('.page');
+            pageDiv.id = `page-demo-${demo.id}`;
+            pageDiv.setAttribute('data-page-id', demo.id);
+
+            clone.querySelector('[data-title]').textContent = `${demo.id}. ${demo.title}`;
+            clone.querySelector('[data-description]').textContent = demo.description;
+            
+            document.body.appendChild(pageDiv);
+        });
+    }
+
+    function initializeDemo(demoId) {
+        const page = document.getElementById(`page-demo-${demoId}`);
+        const contentArea = page.querySelector('[data-content]');
+        const switchElement = page.querySelector('[data-switch]');
+        const switchText = page.querySelector('[data-switch-text]');
+        const videoEmbed = page.querySelector('[data-video-embed]');
+        
+        // Find the video ID for this demo
+        const demoData = demos.find(d => d.id === demoId);
+
+        // Dynamically insert the YouTube embed iframe
+        if (demoData && demoData.videoId) {
+            videoEmbed.innerHTML = `
+                <iframe 
+                    src="https://www.youtube-nocookie.com/embed/${demoData.videoId}?controls=0" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    title="Demo Visual Aid Video"
+                ></iframe>
+            `;
+        } else {
+            videoEmbed.innerHTML = `<div class="w-full h-full flex justify-center items-center bg-red-100"><p class="text-red-600">Video not available for this demo.</p></div>`;
+        }
+
+
+        contentArea.innerHTML = '<div class="text-center p-8 text-gray-500">Toggle the switch above to start the demo and see the content here.</div>';
+        switchElement.checked = false;
+        switchText.textContent = 'OFF';
+
+        switchElement.onchange = () => {
+            if (switchElement.checked) {
+                switchText.textContent = 'ON';
+                loadDemoContent(demoId, contentArea);
+            } else {
+                switchText.textContent = 'OFF';
+                contentArea.innerHTML = '<div class="text-center p-8 text-gray-500">Toggle the switch above to start the demo and see the content here.</div>';
+                if (demoId === 4 && expiryTimer) clearTimeout(expiryTimer);
+                if (demoId === 6 && typingTimer) clearTimeout(typingTimer); 
+            }
+        };
+        
+        const prevBtn = page.querySelector('[data-prev-btn]');
+        const nextBtn = page.querySelector('[data-next-btn]');
+        prevBtn.style.display = demoId > 1 ? 'flex' : 'none';
+        nextBtn.style.display = demoId < demos.length ? 'flex' : 'none';
+    }
+
+    function loadDemoContent(demoId, contentArea) {
+        switch (demoId) {
+            case 1: contentArea.innerHTML = createPasswordStrengthCheckerUI(); setupPasswordStrengthChecker(); break;
+            case 2: contentArea.innerHTML = createWrongPasswordCounterUI(); setupWrongPasswordCounter(); break;
+            case 3: contentArea.innerHTML = createShowHidePasswordUI(); setupShowHidePassword(); break;
+            case 4: contentArea.innerHTML = createPasswordExpiryReminderUI(); setupPasswordExpiryReminder(); break;
+            case 5: contentArea.innerHTML = createBruteForceVisualizerUI(); setupBruteForceVisualizer(); break;
+            case 6: contentArea.innerHTML = createTypingSpeedTestUI(); setupTypingSpeedTest(); break;
+            default:
+                contentArea.innerHTML = `<h3 class="text-xl font-semibold mb-4">Demo ${demoId}: ${demos[demoId-1].title}</h3>
+                <p>This demo is not yet implemented.</p>`;
+        }
+    }
+
+
+    // --- 3. INDIVIDUAL DEMO LOGIC IMPLEMENTATION (UNCHANGED) ---
+    
+    // === DEMO 1: Password Strength Checker ===
+    function createPasswordStrengthCheckerUI() {
+        return `<div class="space-y-4">
+                     <div class="relative">
+                          <input type="password" id="pass-input-1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter a password to test...">
+                          <button onclick="togglePasswordVisibility('pass-input-1', 'toggle-icon-1')" class="absolute right-0 top-0 mt-3 mr-3 text-gray-500 hover:text-primary transition" title="Toggle visibility"><span id="toggle-icon-1">👁️</span></button>
+                     </div>
+                     <div id="strength-meter" class="h-3 rounded-full bg-gray-300">
+                          <div id="strength-bar" class="h-full rounded-full transition-all duration-300 w-0"></div>
+                     </div>
+                     <p id="strength-text" class="text-lg font-semibold"></p>
+                     <div id="strength-feedback" class="p-4 bg-gray-100 rounded-lg text-sm border border-gray-200"></div>
+                 </div>`;
+    }
+    function setupPasswordStrengthChecker() {
+        const input = document.getElementById('pass-input-1');
+        const bar = document.getElementById('strength-bar');
+        const text = document.getElementById('strength-text');
+        const feedback = document.getElementById('strength-feedback');
+        document.getElementById('toggle-icon-1').textContent = '👁️'; 
+
+        input.oninput = (e) => {
+            const p = e.target.value;
+            let strength = 0;
+            let feedbackHtml = '<p class="font-bold text-gray-800 mb-2">To get 100% strength, you need:</p><ul class="list-disc list-inside space-y-1">';
+
+            const checkLength = p.length >= 8;
+            const checkUpper = /[A-Z]/.test(p);
+            const checkLower = /[a-z]/.test(p);
+            const checkNumber = /[0-9]/.test(p);
+            const checkSymbol = /[^A-Za-z0-9]/.test(p);
+            
+            // Scoring adjusted for length of 8
+            if (checkLength) strength += 30;
+            if (checkUpper) strength += 20; 
+            if (checkLower) strength += 20; 
+            if (checkNumber) strength += 15; 
+            if (checkSymbol) strength += 15; 
+            strength = Math.min(100, strength); 
+
+            // Feedback generation
+            feedbackHtml += `<li class="${checkLength ? 'text-success' : 'text-red-500'}">${checkLength ? '✅' : '❌'} Length: ${p.length >= 8 ? '8+ characters (Perfect)' : 'Requires **8+ characters**'}</li>`;
+            feedbackHtml += `<li class="${checkUpper ? 'text-success' : 'text-red-500'}">${checkUpper ? '✅' : '❌'} Uppercase Letters (**A-Z**)</li>`;
+            feedbackHtml += `<li class="${checkLower ? 'text-success' : 'text-red-500'}">${checkLower ? '✅' : '❌'} Lowercase Letters (**a-z**)</li>`;
+            feedbackHtml += `<li class="${checkNumber ? 'text-success' : 'text-red-500'}">${checkNumber ? '✅' : '❌'} Numbers (**0-9**)</li>`;
+            feedbackHtml += `<li class="${checkSymbol ? 'text-success' : 'text-red-500'}">${checkSymbol ? '✅' : '❌'} Symbols/Special Characters (**!@#$...**)</li>`;
+            feedbackHtml += '</ul>';
+
+
+            bar.style.width = `${strength}%`;
+            bar.className = 'h-full rounded-full transition-all duration-300';
+
+            let msg = 'Very Weak';
+            let color = 'bg-red-600';
+            if (strength >= 90) { msg = 'Excellent'; color = 'bg-success'; }
+            else if (strength >= 70) { msg = 'Strong'; color = 'bg-lime-500'; }
+            else if (strength >= 45) { msg = 'Moderate'; color = 'bg-yellow-500'; }
+            else if (strength >= 25) { msg = 'Weak'; color = 'bg-orange-500'; }
+
+            bar.classList.add(color);
+            text.textContent = `Strength: ${msg}`;
+            text.className = `text-lg font-bold ${color.replace('bg', 'text')}`;
+            feedback.innerHTML = feedbackHtml;
+        };
+        input.dispatchEvent(new Event('input'));
+    }
+
+    // === DEMO 2: Wrong Password Counter ===
+    function createWrongPasswordCounterUI() {
+        return `<div class="space-y-4">
+                     <div class="relative">
+                          <input type="password" id="pass-input-2" class="w-full p-3 border border-gray-300 rounded-lg bg-white" placeholder="Enter password (correct is 'secret')">
+                          <button onclick="togglePasswordVisibility('pass-input-2', 'toggle-icon-2')" class="absolute right-0 top-0 mt-3 mr-3 text-gray-500 hover:text-primary transition" title="Toggle visibility"><span id="toggle-icon-2">👁️</span></button>
+                     </div>
+                     <button onclick="checkPasswordCounter()" class="w-full p-3 bg-primary text-white rounded-lg hover:bg-nav-active">Attempt Login</button>
+                     <p id="counter-display" class="text-lg font-semibold text-gray-700">Failed attempts: 0</p>
+                     <p id="lock-message" class="text-red-600 font-bold hidden p-3 bg-red-100 rounded-lg border border-red-300">ACCESS LOCKED! Too many failed attempts.</p>
+                 </div>`;
+    }
+    function setupWrongPasswordCounter() {
+        wrongPassCounter = 0;
+        document.getElementById('counter-display').textContent = 'Failed attempts: 0';
+        document.getElementById('lock-message').classList.add('hidden');
+        const display = document.getElementById('counter-display');
+        display.classList.remove('text-success', 'text-red-600');
+        display.classList.add('text-gray-700');
+        document.getElementById('toggle-icon-2').textContent = '👁️';
+        document.getElementById('pass-input-2').type = 'password';
+    }
+    function checkPasswordCounter() {
+        const pass = document.getElementById('pass-input-2').value;
+        const display = document.getElementById('counter-display');
+        const lockMsg = document.getElementById('lock-message');
+        
+        if (lockMsg.classList.contains('hidden') === false) return; 
+
+        if (pass === 'secret') {
+            display.textContent = 'Login Successful! Access Granted.';
+            display.classList.remove('text-red-600', 'text-gray-700');
+            display.classList.add('text-success');
+            wrongPassCounter = 0;
+        } else {
+            wrongPassCounter++;
+            display.classList.remove('text-success', 'text-gray-700');
+            display.classList.add('text-red-600');
+            display.textContent = `Login Failed! Failed attempts: ${wrongPassCounter}`;
+
+            if (wrongPassCounter >= 3) {
+                lockMsg.classList.remove('hidden');
+            }
+        }
+    }
+    
+    // === DEMO 3: Show/Hide Password ===
+    function createShowHidePasswordUI() {
+        // Renaming IDs for generic toggle function compatibility
+        return `<div class="space-y-4">
+                     <div class="relative">
+                          <input type="password" id="pass-input-3" class="w-full p-3 border border-gray-300 rounded-lg bg-white" placeholder="Enter your password">
+                          <button onclick="togglePasswordVisibility('pass-input-3', 'toggle-icon-3')" class="absolute right-0 top-0 mt-3 mr-3 text-gray-500 hover:text-primary transition" title="Toggle visibility"><span id="toggle-icon-3">👁️</span></button>
+                     </div>
+                     <p class="text-sm text-gray-500">Observe the eye icon changing to see the password. This is a usability feature, but highlights the risk of shoulder surfing.</p>
+                 </div>`;
+    }
+    function setupShowHidePassword() {
+        document.getElementById('pass-input-3').type = 'password';
+        document.getElementById('toggle-icon-3').textContent = '👁️';
+    }
+
+    // === DEMO 4: Password Expiry Reminder ===
+    function createPasswordExpiryReminderUI() {
+        return `<div class="text-center space-y-4 p-6 bg-yellow-100 rounded-lg border border-yellow-300">
+            <p class="text-xl font-bold text-gray-700">Password will expire in approximately:</p>
+            <div id="expiry-display" class="text-6xl font-mono text-red-600 font-extrabold mb-4">-- days</div>
+            <p id="expiry-status" class="text-lg font-semibold text-success">System is Active. (Simulating a 90-day cycle in 10 seconds)</p>
+            <p class="text-sm text-gray-600 mt-4">**Imminent** means the expiry is about to happen very soon. (Used here for the last 3 simulated days).</p>
+        </div>`;
+    }
+
+    function setupPasswordExpiryReminder() {
+        const display = document.getElementById('expiry-display');
+        const status = document.getElementById('expiry-status');
+        let totalSeconds = 10;
+        
+        const SIMULATED_TOTAL_DAYS = 90;
+        const SECONDS_TO_DAYS_FACTOR = SIMULATED_TOTAL_DAYS / totalSeconds;
+        
+        function updateTimer() {
+            if (totalSeconds < 0) {
+                clearTimeout(expiryTimer);
+                display.textContent = '00 days';
+                status.textContent = '‼️ Your Password Has EXPIRED! Set a new password immediately, otherwise you are in danger!';
+                status.classList.remove('text-success', 'text-yellow-600');
+                status.classList.add('text-white', 'bg-red-700', 'p-4', 'rounded-lg', 'shadow-lg');
+                return;
+            }
+
+            const remainingDays = Math.ceil((totalSeconds * SECONDS_TO_DAYS_FACTOR));
+            
+            const formattedDays = String(Math.max(0, remainingDays)).padStart(2, '0');
+            display.textContent = `${formattedDays} days`;
+            
+            if (totalSeconds <= 3) {
+                status.textContent = '🚨 Warning! Expiry is **imminent**! Change your password immediately!';
+                status.classList.remove('text-success');
+                status.classList.add('text-yellow-600');
+            } else if (totalSeconds > 3) {
+                status.textContent = `System is Active. (Simulating a ${SIMULATED_TOTAL_DAYS}-day cycle in 10 seconds)`;
+                status.classList.remove('text-yellow-600', 'text-white', 'bg-red-700', 'p-4', 'rounded-lg', 'shadow-lg');
+                status.classList.add('text-success');
+            }
+
+            totalSeconds--;
+            expiryTimer = setTimeout(updateTimer, 1000);
+        }
+
+        updateTimer();
+    }
+    
+    // === DEMO 5: Brute Force Visualizer (Now Demo 5) ===
+    function createBruteForceVisualizerUI() {
+        return `<div class="space-y-4 text-center">
+                     <p class="text-sm text-gray-600 bg-gray-100 p-3 rounded-lg border border-gray-300">
+                          This tool estimates the time a **powerful, modern cracking rig** would need to guess your password. Longer and more complex passwords increase this time exponentially.
+                     </p>
+                     <input type="text" id="bf-pass" class="w-full p-3 border border-gray-300 rounded-lg bg-white" placeholder="Enter a password to estimate hack time...">
+                     <button onclick="calculateBruteForce()" class="w-full p-3 bg-accent text-white rounded-lg hover:bg-red-600">Calculate Hack Time</button>
+                     <div id="bf-result" class="p-6 bg-red-100 border-2 border-red-300 rounded-lg hidden">
+                          <p class="text-xl font-bold text-gray-800 mb-2">Estimated Time to Brute Force:</p>
+                          <p id="bf-time" class="text-4xl font-mono text-red-600 font-extrabold"></p>
+                          <p class="text-sm text-gray-600 mt-4">Assumes a cracking speed of **10 billion hashes/sec**.</p>
+                     </div>
+                 </div>`;
+    }
+
+    function calculateBruteForce() {
+        const pass = document.getElementById('bf-pass').value;
+        const resultDiv = document.getElementById('bf-result');
+        const timeDisplay = document.getElementById('bf-time');
+        
+        if (pass.length === 0) {
+            timeDisplay.textContent = "Please enter a password.";
+            resultDiv.classList.remove('hidden');
+            return;
+        }
+
+        let characterSetSize = 0;
+        if (/[a-z]/.test(pass)) characterSetSize += 26;
+        if (/[A-Z]/.test(pass)) characterSetSize += 26;
+        if (/[0-9]/.test(pass)) characterSetSize += 10;
+        if (/[^A-Za-z0-9]/.test(pass)) characterSetSize += 32; 
+
+        if (characterSetSize === 0) characterSetSize = 52; 
+        
+        const combinations = Math.pow(characterSetSize, pass.length);
+        const hashesPerSecond = 10000000000; 
+        const seconds = combinations / hashesPerSecond;
+        
+        const formatTime = (s) => {
+            if (s < 0.000001) return `< 1 microsecond`;
+            if (s < 0.001) return `${(s * 1000).toFixed(2)} milliseconds`;
+            if (s < 60) return `${s.toFixed(2)} seconds`;
+            const minutes = s / 60;
+            if (minutes < 60) return `${minutes.toFixed(2)} minutes`;
+            const hours = minutes / 60;
+            if (hours < 24) return `${hours.toFixed(2)} hours`;
+            const days = hours / 24;
+            if (days < 365.25) return `${days.toFixed(2)} days`;
+            const years = days / 365.25;
+            return `${years.toLocaleString(undefined, { maximumFractionDigits: 2 })} years`;
+        };
+
+        timeDisplay.textContent = formatTime(seconds);
+        resultDiv.classList.remove('hidden');
+    }
+
+    // === DEMO 6: Typing Speed Password Test (Now Demo 6) ===
+    function createTypingSpeedTestUI() {
+        return `<div class="space-y-4"><input type="password" id="type-pass-input" class="w-full p-3 border border-gray-300 rounded-lg font-mono text-lg bg-white" placeholder="Start typing your password here..."><p id="timer-display" class="text-2xl font-bold text-gray-700">Time: 0.00s</p><p class="text-sm text-gray-500">Press ENTER after typing the password to stop the timer. This illustrates that short, complex passwords are safer than long, easy-to-type ones.</p></div>`;
+    }
+
+    function setupTypingSpeedTest() {
+        const input = document.getElementById('type-pass-input');
+        const display = document.getElementById('timer-display');
+        let startTime = 0;
+        let timerRunning = false;
+
+        display.textContent = 'Time: 0.00s (Ready)';
+        input.value = '';
+        input.onkeydown = null; 
+
+        input.onkeydown = (e) => {
+            if (!timerRunning) {
+                startTime = performance.now();
+                timerRunning = true;
+                display.textContent = 'Timer Started...';
+            }
+            if (e.key === 'Enter') {
+                e.preventDefault(); 
+                if (timerRunning) {
+                    const endTime = performance.now();
+                    const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
+                    display.textContent = `Time: ${timeTaken}s (Password Typed)`;
+                    timerRunning = false;
+                }
+            }
+        };
+    }
+
+
+    // --- 4. INITIALIZATION CALLS ---
+    function initialize() {
+        createDemoPages();
+        
+        // Populate the Menu Page List
+        const menuList = document.getElementById('demo-menu-list');
+        menuList.innerHTML = demos.map(d => `
+            <div class="p-8 page-content-box rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-l-4 border-primary hover:border-accent flex flex-col justify-between">
+                <div>
+                    <span class="text-sm font-semibold text-gray-500">${d.id}.</span>
+                    <h3 class="text-2xl font-extrabold text-gray-800 mb-3">${d.title}</h3>
+                    <p class="text-gray-600 mb-6">${d.description}</p>
+                </div>
+                <button onclick="changePage(${d.id}, true)" class="mt-4 px-6 py-3 bg-primary text-white font-bold rounded-lg hover:bg-nav-active transition">
+                    Start Demo ${d.id} →
+                </button>
+            </div>
+        `).join('');
+        
+        // Ensure the initial active nav button is highlighted and the correct page is shown
+        changePage(activePageId, true);
+    }
+
+    // Run the initialization when the page loads
+    window.onload = initialize;
+</script>
+
+</body>
+</html>
